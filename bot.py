@@ -13,13 +13,15 @@ VERIFY_TOKEN = os.getenv('VERIFY_TOKEN')
 # Weryfikacja webhooka
 @app.route('/webhook', methods=['GET'])
 def verify():
+    app.logger.info("Received GET request")
     if request.args.get('hub.mode') == 'subscribe' and request.args.get('hub.verify_token') == VERIFY_TOKEN:
         return request.args['hub.challenge'], 200
+    app.logger.error("Verification failed")
     return 'Verification failed', 403
 
-# Odbieranie wiadomości
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    app.logger.info("Received POST request")
     data = request.get_json()
     if 'entry' in data:
         for entry in data['entry']:
@@ -41,6 +43,5 @@ def send_message(recipient_id, message_text):
         print(f"Failed to send message: {response.text}")
 
 if __name__ == '__main__':
-
-    port = os.environ.get('PORT', 5000)  
-    app.run(host='0.0.0.0', port=port) 
+    port = os.environ.get('PORT', 5000)  # Railway ustawia zmienną PORT
+    app.run(host='0.0.0.0', port=port)
