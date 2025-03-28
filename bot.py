@@ -13,10 +13,8 @@ VERIFY_TOKEN = os.getenv('VERIFY_TOKEN')
 # Weryfikacja webhooka
 @app.route('/webhook', methods=['GET'])
 def verify():
-    app.logger.info("Received GET request")
     if request.args.get('hub.mode') == 'subscribe' and request.args.get('hub.verify_token') == VERIFY_TOKEN:
         return request.args['hub.challenge'], 200
-    app.logger.error("Verification failed")
     return 'Verification failed', 403
 
 @app.route('/webhook', methods=['POST'])
