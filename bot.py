@@ -43,5 +43,5 @@ def send_message(recipient_id, message_text):
         print(f"Failed to send message: {response.text}")
 
 if __name__ == '__main__':
-    port = os.environ.get('PORT', 5000)  # Railway ustawia zmienną PORT
+    port = os.environ.get('PORT', 8080)  # Railway ustawia zmienną PORT, domyślnie 8080
     app.run(host='0.0.0.0', port=port)
