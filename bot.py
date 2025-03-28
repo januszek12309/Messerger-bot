@@ -17,6 +17,10 @@ def verify():
         return request.args['hub.challenge'], 200
     return 'Verification failed', 403
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return "OK", 200
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     app.logger.info("Received POST request")
