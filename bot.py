@@ -41,4 +41,6 @@ def send_message(recipient_id, message_text):
         print(f"Failed to send message: {response.text}")
 
 if __name__ == '__main__':
-    app.run(port=5000)
+
+    port = os.environ.get('PORT', 5000)  
+    app.run(host='0.0.0.0', port=port) 
